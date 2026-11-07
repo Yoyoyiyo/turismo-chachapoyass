@@ -1,0 +1,1238 @@
+
+/* =========================================================
+   1. VARIABLES Y CONFIGURACIÓN GENERAL
+========================================================= */
+
+:root {
+    --fondo: #101914;
+    --panel: #17241c;
+    --verde: #315c43;
+    --verde-claro: #91ad83;
+    --dorado: #d5b477;
+    --texto: #f5f3ec;
+    --suave: #c2c9bf;
+    --borde: rgba(213, 180, 119, .22);
+    --sombra: 0 22px 60px rgba(0, 0, 0, .32);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    overflow-x: hidden;
+}
+
+body.sin-scroll {
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+}
+
+.salto-contenido {
+    position: absolute;
+    left: -9999px;
+    top: 10px;
+    z-index: 1000;
+    background: white;
+    color: #111;
+    padding: 12px;
+}
+
+.salto-contenido:focus {
+    left: 10px;
+}
+
+
+/* =========================================================
+   2. CARRUSEL PRINCIPAL
+========================================================= */
+
+.experiencia {
+    height: 600vh;
+    position: relative;
+    background: radial-gradient(
+        ellipse at 50% 15%,
+        #263b2b,
+        #101914 65%
+    );
+}
+
+.escenario {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.pista-tarjetas {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: max-content;
+    padding-left: 0;
+    padding-right: 35vw;
+    will-change: transform;
+}
+
+.tarjeta {
+    position: relative;
+    flex-shrink: 0;
+    width: 65vw;
+    max-width: 850px;
+    height: 430px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #222;
+    transform: scale(.94);
+    opacity: .72;
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: var(--sombra);
+    transition:
+        transform .5s,
+        opacity .5s,
+        box-shadow .5s,
+        border .5s;
+    cursor: pointer;
+}
+
+.tarjeta img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .8s;
+}
+
+.tarjeta:hover img {
+    transform: scale(1.06);
+}
+
+.tarjeta.activa {
+    transform: scale(1.02);
+    opacity: 1;
+    border-color: var(--dorado);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+}
+
+.tarjeta::after {
+    content: "";
+    position: absolute;
+    inset: 35% 0 0;
+    background: linear-gradient(
+        transparent,
+        rgba(7, 15, 10, .88)
+    );
+    pointer-events: none;
+}
+
+
+/* Tarjeta principal de Chachapoyas */
+
+.tarjeta.plaza {
+    width: 100vw;
+    max-width: none;
+    height: 100vh;
+    border-radius: 0;
+    transform: none;
+    opacity: 1;
+    border: 0;
+    box-shadow: none;
+    cursor: default;
+}
+
+.tarjeta.plaza::after {
+    inset: 0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(8, 18, 12, .72),
+            rgba(8, 18, 12, .14)
+        ),
+        linear-gradient(
+            0deg,
+            rgba(8, 18, 12, .38),
+            transparent 65%
+        );
+}
+
+
+/* =========================================================
+   3. CONTENIDO DE LA PORTADA
+========================================================= */
+
+.plaza .contenido {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 8vw;
+    max-width: 1050px;
+    text-shadow: 0 3px 24px rgba(0, 0, 0, .45);
+}
+
+.hero-kicker,
+.eyebrow {
+    color: var(--dorado);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.plaza .contenido h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(54px, 10vw, 120px);
+    line-height: .98;
+    letter-spacing: 1px;
+    margin: 18px 0;
+}
+
+.plaza .contenido p {
+    font-size: clamp(17px, 2vw, 23px);
+    color: #f1f0e8;
+    max-width: 580px;
+    line-height: 1.6;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 28px;
+    padding: 14px 21px;
+    border: 1px solid rgba(213, 180, 119, .8);
+    border-radius: 999px;
+    background: rgba(20, 37, 28, .72);
+    color: var(--texto);
+    font-weight: 700;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.hero-cta:hover {
+    background: var(--dorado);
+    color: #172219;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   4. INFORMACIÓN DE LAS TARJETAS
+========================================================= */
+
+.info-tarjeta {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 35px;
+}
+
+.info-tarjeta span {
+    color: var(--dorado);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+}
+
+.info-tarjeta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(25px, 4vw, 42px);
+    margin-top: 10px;
+}
+
+.info-tarjeta p {
+    color: #e0e2db;
+    max-width: 450px;
+    line-height: 1.6;
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   5. INDICADOR DEL CARRUSEL
+========================================================= */
+
+.indicador-carrusel {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(450px, 75vw);
+    z-index: 5;
+}
+
+.linea-progreso {
+    position: relative;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, .25);
+    border-radius: 10px;
+}
+
+.linea-relleno {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: var(--dorado);
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(213, 180, 119, .5);
+}
+
+.contenedor-puntos {
+    position: absolute;
+    inset: 0;
+}
+
+.punto {
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    background: #526056;
+    border: 2px solid #aab5a9;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition: all .3s;
+}
+
+.punto.activo {
+    background: var(--dorado);
+    border-color: white;
+    box-shadow: 0 0 10px rgba(213, 180, 119, .75);
+    transform: translate(-50%, -50%) scale(1.35);
+}
+
+
+/* =========================================================
+   6. SECCIÓN DE INTRODUCCIÓN
+========================================================= */
+
+.seccion-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    padding: 110px max(7vw, 24px);
+    background: #17251c;
+}
+
+.seccion-intro-texto {
+    max-width: 760px;
+}
+
+.seccion-intro h2,
+.section-heading h2,
+.cultura-copy h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.08;
+    margin: 16px 0;
+}
+
+.seccion-intro p,
+.section-heading p,
+.cultura-copy p {
+    color: var(--suave);
+    line-height: 1.85;
+    font-size: 16px;
+    max-width: 760px;
+}
+
+.intro-stat {
+    min-width: 170px;
+    border-left: 1px solid var(--borde);
+    padding-left: 38px;
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-stat strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 76px;
+    color: var(--dorado);
+    line-height: 1;
+}
+
+.intro-stat span {
+    color: var(--suave);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+
+/* =========================================================
+   7. DIRECTORIO FOTOGRÁFICO DE LOS 21 DISTRITOS
+========================================================= */
+
+.distritos-section {
+    padding: 110px max(7vw, 24px);
+    background: var(--fondo);
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 48px;
+}
+
+.section-heading p {
+    margin: 0 auto;
+}
+
+.distritos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.distrito-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+    min-height: 245px;
+    text-align: left;
+    background: #17251c;
+    border: 1px solid rgba(213, 180, 119, .18);
+    border-radius: 16px;
+    color: var(--texto);
+    cursor: pointer;
+    transition:
+        transform .25s,
+        border-color .25s,
+        background .25s;
+}
+
+.distrito-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--dorado);
+    background: #1b2d21;
+}
+
+.distrito-foto {
+    width: 100%;
+    height: 170px;
+    display: block;
+    object-fit: cover;
+    transition: transform .55s;
+}
+
+.distrito-card:hover .distrito-foto {
+    transform: scale(1.045);
+}
+
+.distrito-numero {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    left: 12px;
+    padding: 6px 9px;
+    border-radius: 30px;
+    background: rgba(12, 24, 17, .78);
+    color: var(--dorado);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.distrito-nombre {
+    padding: 15px 42px 16px 16px;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 600;
+    flex: 1;
+}
+
+.distrito-flecha {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    color: var(--verde-claro);
+}
+
+
+/* =========================================================
+   8. MODAL DE LOS DISTRITOS
+========================================================= */
+
+.modal-distrito .modal-panel {
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.modal-distrito-foto {
+    display: block;
+    width: 100%;
+    max-height: 310px;
+    object-fit: cover;
+    border-radius: 13px;
+    margin: 18px 0 12px;
+}
+
+.modal-distrito-nota {
+    font-size: 13px;
+    color: var(--suave);
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   9. SECCIÓN DE CULTURA
+========================================================= */
+
+.cultura-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+    background: #1b2a20;
+}
+
+.cultura-imagen {
+    min-height: 420px;
+    overflow: hidden;
+}
+
+.cultura-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cultura-copy {
+    align-self: center;
+    padding: 70px clamp(30px, 7vw, 110px);
+}
+
+.cultura-copy p {
+    margin: 15px 0;
+}
+
+.text-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--dorado);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.text-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   10. PIE DE PÁGINA
+========================================================= */
+
+.sitio-footer {
+    padding: 55px max(7vw, 24px) 28px;
+    background: #0b120e;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 25px;
+    align-items: center;
+}
+
+.footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.footer-brand span {
+    color: var(--dorado);
+}
+
+.sitio-footer p,
+.sitio-footer small {
+    color: #9da99e;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: #d7ded5;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    color: var(--dorado);
+}
+
+.sitio-footer small {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    padding-top: 20px;
+}
+
+
+/* =========================================================
+   11. VENTANA DE DETALLES DE LOS DESTINOS
+========================================================= */
+
+#detalleDestino {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    background: #101914;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: clip-path 1s cubic-bezier(.22, 1, .36, 1);
+}
+
+#detalleDestino .detalle-portada {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 540px;
+    overflow: hidden;
+}
+
+#detalleDestino #imagenPortada {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#detalleDestino .detalle-portada::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        0deg,
+        rgba(5, 12, 8, .88),
+        transparent 72%
+    );
+    pointer-events: none;
+}
+
+
+/* Título de la portada del destino */
+
+.titulo-portada {
+    position: absolute;
+    z-index: 2;
+    bottom: 70px;
+    left: 8%;
+    right: 8%;
+}
+
+.titulo-portada span,
+.introduccion span {
+    color: var(--dorado);
+    letter-spacing: 3px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.titulo-portada h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 70px);
+    margin: 15px 0;
+}
+
+.titulo-portada p {
+    font-size: 19px;
+    color: #e2e5df;
+}
+
+
+/* Botón para volver */
+
+.btn-volver {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    z-index: 5;
+    padding: 12px 19px;
+    border: 1px solid rgba(213, 180, 119, .8);
+    border-radius: 999px;
+    background: rgba(12, 22, 16, .75);
+    color: white;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn-volver:hover {
+    background: var(--dorado);
+    color: #172219;
+}
+
+
+/* =========================================================
+   12. CONTENIDO DE LOS DESTINOS
+========================================================= */
+
+.detalle-contenido {
+    max-width: 1150px;
+    margin: auto;
+    padding: 85px 28px;
+}
+
+.introduccion {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.introduccion h2,
+.galeria h2,
+.datos-destino h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(29px, 4vw, 42px);
+    margin: 18px 0;
+}
+
+.introduccion p {
+    color: #bdc7bd;
+    line-height: 1.9;
+    margin: 18px 0;
+}
+
+
+/* =========================================================
+   13. GALERÍA DE IMÁGENES
+========================================================= */
+
+.galeria,
+.datos-destino {
+    margin-top: 85px;
+}
+
+.imagenes-galeria {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.imagenes-galeria img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 14px;
+    cursor: zoom-in;
+    transition: transform .35s, filter .35s;
+}
+
+.imagenes-galeria img:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.08);
+    box-shadow: 0 0 10px rgb(5, 38, 226);
+}
+
+
+/* =========================================================
+   14. DATOS DEL DESTINO
+========================================================= */
+
+.datos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.dato {
+    padding: 24px;
+    background: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+}
+
+.dato span {
+    color: var(--dorado);
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.dato h3 {
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 500;
+    margin-top: 12px;
+    color: #e0e6df;
+}
+
+
+/* =========================================================
+   15. MAPAS
+========================================================= */
+
+.mapa-enlace {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: white;
+}
+
+.mapa-enlace iframe {
+    width: 100%;
+    height: 160px;
+    border: 0;
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.mapa-enlace p {
+    margin-top: 8px;
+    color: var(--dorado);
+    font-size: 13px;
+}
+
+
+/* Botón final de volver */
+
+.btn-volver.final {
+    position: static;
+    margin-top: 55px;
+}
+
+
+/* =========================================================
+   16. ANIMACIÓN DE LAS VENTANAS DE ENTRADA
+========================================================= */
+
+.ventanas {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    perspective: 1000px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.ventana {
+    width: 50%;
+    height: 100%;
+    object-fit: fill;
+    transition: transform 2s ease-in-out;
+}
+
+.izquierda {
+    transform-origin: left center;
+}
+
+.derecha {
+    transform-origin: right center;
+}
+
+.ventanas.abierto .izquierda {
+    transform: rotateY(-110deg);
+}
+
+.ventanas.abierto .derecha {
+    transform: rotateY(110deg);
+}
+
+
+/* =========================================================
+   17. MODALES Y VISOR DE IMÁGENES
+========================================================= */
+
+.modal-distrito,
+.visor-imagen {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    background: rgba(4, 10, 7, .82);
+    backdrop-filter: blur(9px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .25s;
+}
+
+.modal-distrito.visible,
+.visor-imagen.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-panel {
+    position: relative;
+    width: min(600px, 100%);
+    padding: 48px;
+    background: #19291f;
+    border: 1px solid var(--borde);
+    border-radius: 22px;
+    box-shadow: var(--sombra);
+}
+
+.modal-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin: 15px 0;
+}
+
+.modal-panel p {
+    color: var(--suave);
+    line-height: 1.8;
+}
+
+.modal-cerrar,
+.visor-imagen button {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    border: 0;
+    background: transparent;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.visor-imagen img {
+    max-width: min(1100px, 92vw);
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+}
+
+
+/* =========================================================
+   18. RESPONSIVE: TABLETS Y PANTALLAS MEDIANAS
+========================================================= */
+
+@media (max-width: 991px) {
+
+    /* Introducción */
+
+    .seccion-intro {
+        gap: 30px;
+    }
+
+    /* Distritos */
+
+    .distritos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Cultura */
+
+    .cultura-copy {
+        padding: 55px 38px;
+    }
+
+    /* Datos */
+
+    .datos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Galería */
+
+    .imagenes-galeria {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   19. RESPONSIVE: CELULARES
+========================================================= */
+
+@media (max-width: 767px) {
+
+    /* Carrusel */
+
+    .pista-tarjetas {
+        gap: 18px;
+    }
+
+    .tarjeta {
+        width: 86vw;
+        height: 55vh;
+        min-height: 320px;
+        border-radius: 17px;
+    }
+
+    .tarjeta.plaza {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+    }
+
+    .plaza .contenido {
+        padding: 9vw;
+    }
+
+    .plaza .contenido h1 {
+        font-size: clamp(48px, 13vw, 78px);
+    }
+
+    .info-tarjeta {
+        padding: 22px;
+    }
+
+    .indicador-carrusel {
+        bottom: 24px;
+    }
+
+
+    /* Introducción */
+
+    .seccion-intro {
+        padding: 75px 25px;
+        display: block;
+    }
+
+    .intro-stat {
+        margin-top: 30px;
+        padding-left: 20px;
+    }
+
+    .intro-stat strong {
+        font-size: 60px;
+    }
+
+
+    /* Distritos */
+
+    .distritos-section {
+        padding: 75px 22px;
+    }
+
+    .distritos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .distrito-card {
+        min-height: 190px;
+    }
+
+    .distrito-foto {
+        height: 125px;
+    }
+
+    .distrito-nombre {
+        font-size: 12px;
+        padding: 12px 32px 13px 11px;
+    }
+
+    .distrito-numero {
+        top: 8px;
+        left: 8px;
+    }
+
+    .distrito-flecha {
+        right: 10px;
+        bottom: 13px;
+    }
+
+
+    /* Cultura */
+
+    .cultura-section {
+        grid-template-columns: 1fr;
+    }
+
+    .cultura-imagen {
+        height: 300px;
+        min-height: 0;
+    }
+
+    .cultura-copy {
+        padding: 55px 25px;
+    }
+
+
+    /* Footer */
+
+    .sitio-footer {
+        grid-template-columns: 1fr;
+        padding: 45px 25px 24px;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .sitio-footer small {
+        grid-column: auto;
+    }
+
+
+    /* Detalles de destinos */
+
+    #detalleDestino .detalle-portada {
+        height: 78vh;
+        height: 78svh;
+        min-height: 430px;
+    }
+
+    .titulo-portada {
+        left: 6%;
+        right: 6%;
+        bottom: 42px;
+    }
+
+    .titulo-portada h1 {
+        font-size: clamp(34px, 9vw, 52px);
+    }
+
+    .titulo-portada p {
+        font-size: 16px;
+    }
+
+    .btn-volver {
+        top: 17px;
+        left: 17px;
+    }
+
+    .detalle-contenido {
+        padding: 65px 20px;
+    }
+
+    .galeria,
+    .datos-destino {
+        margin-top: 60px;
+    }
+
+
+    /* Galería */
+
+    .imagenes-galeria {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .imagenes-galeria img {
+        height: 155px;
+    }
+
+
+    /* Datos */
+
+    .datos-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Modal */
+
+    .modal-panel {
+        padding: 40px 24px 28px;
+    }
+
+    .modal-panel h2 {
+        font-size: 34px;
+    }
+
+    .modal-distrito,
+    .visor-imagen {
+        padding: 14px;
+    }
+}
+
+
+/* =========================================================
+   20. RESPONSIVE: CELULARES PEQUEÑOS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    /* Carrusel */
+
+    .tarjeta {
+        width: 90vw;
+    }
+
+    .info-tarjeta h3 {
+        font-size: 25px;
+    }
+
+    /* Distritos */
+
+    .distritos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .distrito-card {
+        min-height: 220px;
+    }
+
+    .distrito-foto {
+        height: 155px;
+    }
+
+    /* Galería */
+
+    .imagenes-galeria {
+        grid-template-columns: 1fr;
+    }
+
+    .imagenes-galeria img {
+        height: 210px;
+    }
+
+    /* Modal */
+
+    .modal-panel {
+        padding: 38px 20px 25px;
+    }
+}
+
+
+/* =========================================================
+   21. ACCESIBILIDAD: REDUCIR MOVIMIENTOS
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+}
